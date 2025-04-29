@@ -1,25 +1,25 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { CreatePayment, Transaction } from '../../models/payment.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = 'http://127.0.0.1:8000/api';
 
-  headers = new HttpHeaders({
+  private readonly headers = new HttpHeaders({
    'Content-Type': 'application/json',
    'Accept': 'application/json'
  });
-
- constructor(private http: HttpClient) { }
-
- createPayment(paymentData: any){
+ createPayment(paymentData: CreatePayment){
    return this.http.post(`${this.apiUrl}/createPayment`, paymentData, { headers: this.headers });
  }
 
- getTransactions() {
-   return this.http.get(`${this.apiUrl}/getTransactions`, { headers: this.headers });
+ getTransactions():Observable<Transaction[]> {
+   return this.http.get<Transaction[]>(`${this.apiUrl}/getTransactions`, { headers: this.headers });
  }
 }
