@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { PaymentService } from '../services/payment.service';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PaymentService } from '../../core/services/payment.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-payment',
-  standalone: true,
+  standalone:true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-payment.component.html',
   styleUrl: './create-payment.component.css'
 })
-export class CreatePaymentComponent implements OnInit {
+export class CreatePaymentComponent {
   paymentForm: FormGroup;
   paymentUrl: string | null = null;
 

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { PaymentService } from '../services/payment.service';
-import { NgIf, NgFor, CurrencyPipe, DatePipe, NgClass } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { Component } from '@angular/core';
+import { PaymentService } from '../../core/services/payment.service';
+
 
 @Component({
   selector: 'app-transactions',
+  standalone:true,
   imports: [NgIf, NgFor, CurrencyPipe, DatePipe, NgClass],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css',
-  standalone: true
+  styleUrl: './transactions.component.css'
 })
-export class TransactionsComponent implements OnInit {
-  private readonly DEFAULT_PAYMENT_METHOD = 'Método no especificado';
+export class TransactionsComponent {
+ private readonly DEFAULT_PAYMENT_METHOD = 'Método no especificado';
   private readonly DEFAULT_DATE = new Date();
   private readonly DEFAULT_NUMBER = '0.00';
   transactions: any[] = [];
@@ -38,7 +39,7 @@ export class TransactionsComponent implements OnInit {
   loadTransactions() {
     this.loading = true;
     this.error = null;
-    
+
     this.paymentService.getTransactions().subscribe({
       next: (data:any) => {
         this.transactions = data;
