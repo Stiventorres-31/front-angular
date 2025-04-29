@@ -7,5 +7,9 @@ Este repositorio contiene la implementación de un sistema de creación de un pa
 - Consultar todas las transacciones
 - Consultar 1 transacción (Hay que desarrollarla)
 
-## Modificaciones
+## Modificaciones principales
 - Reorganizo la estructura de carpeta a la forma más recomendada y también las rutas
+
+## Services
+- Al `payment.service` eliminamos el contralador, definiamos una variable `inject` para realizar las peticiones y mejoramos los headers. 
+- Separacion de los modelos del payment
