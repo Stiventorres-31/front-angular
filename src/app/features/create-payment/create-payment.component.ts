@@ -14,6 +14,7 @@ export class CreatePaymentComponent{
 
   private formularioBuilder = inject(FormBuilder);
   private paymentService = inject(PaymentService)
+  
   paymentForm: FormGroup = this.formularioBuilder.group({
     name:['',Validators.required],
     email:['',[Validators.required,Validators.email]],
