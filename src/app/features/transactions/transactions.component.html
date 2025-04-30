@@ -57,5 +57,18 @@
     <div *ngIf="transactions.length === 0" class="text-center">
       <p>No hay transacciones disponibles</p>
     </div>
+
+    <nav *ngIf="paginationLinks.length > 1" class="mt-3">
+      <ul class="pagination justify-content-center">
+        <li *ngFor="let link of paginationLinks" class="page-item" [class.active]="link.active"
+          [class.disabled]="!link.url">
+          <button class="page-link" type="button" [innerHTML]="link.label" [disabled]="!link.url"
+            (click)="onPageChange(link.url)"></button>
+        </li>
+      </ul>
+    </nav>
+
+
+
   </div>
 </div>

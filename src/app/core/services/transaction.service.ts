@@ -27,4 +27,7 @@ export class TransactionService {
       ApiResponse<{ transactions: Pagination<Transaction> }>
     >(`${this.apiUrl}/getTransactions`, { headers: this.headers });
   }
+  getTransactionsByUrl(url: string): Observable<ApiResponse<{ transactions: Pagination<Transaction> }>> {
+    return this.http.get<ApiResponse<{ transactions: Pagination<Transaction> }>>(url);
+  }
 }
