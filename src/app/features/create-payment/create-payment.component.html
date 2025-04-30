@@ -2,103 +2,114 @@
   <h2 class="mb-4">Crear Link de Pago</h2>
 
   <form [formGroup]="paymentForm" (ngSubmit)="createPaymentOnSubmit()" novalidate>
-    <!-- Nombre -->
-    <div class="mb-3">
-      <label for="name" class="form-label">Nombre</label>
-      <input type="text" class="form-control" [class.is-invalid]="
-          paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched
-        " id="name" formControlName="name" />
-      <div *ngIf="
-          paymentForm.get('name')?.touched && paymentForm.get('name')?.invalid
-        " class="invalid-feedback">
-        El nombre es obligatorio.
-      </div>
-    </div>
 
-    <!-- Email -->
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" [class.is-invalid]="
+
+    <div class="row">
+      <!-- Nombre -->
+      <div class="col-md-6 mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" [class.is-invalid]="
+            paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched
+          " id="name" formControlName="name" />
+        <div *ngIf="
+            paymentForm.get('name')?.touched && paymentForm.get('name')?.invalid
+          " class="invalid-feedback">
+          El nombre es obligatorio.
+        </div>
+      </div>
+      <!-- Email -->
+      <div class="col-md-6 mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" [class.is-invalid]="
           paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched
         " id="email" formControlName="email" />
-      <div *ngIf="paymentForm.get('email')?.touched && paymentForm.get('email')?.errors?.['required']"
-        class="invalid-feedback">
-        El email es obligatorio.
-      </div>
-      <div *ngIf="paymentForm.get('email')?.errors?.['email'] && paymentForm.get('email')?.touched"
-        class="invalid-feedback">
-        El email no tiene un formato válido.
-      </div>
-    </div>
-
-    <!-- Tipo de documento -->
-    <div class="mb-3">
-      <label for="type_document" class="form-label">Tipo de Documento</label>
-      <select class="form-select" id="type_document" formControlName="type_document" [class.is-invalid]="
-          paymentForm.get('type_document')?.invalid &&
-          paymentForm.get('type_document')?.touched
-        ">
-        <option value="CC">Cédula (CC)</option>
-        <option value="PA">Pasaporte</option>
-        <option value="CE">Carnet de Extranjería</option>
-      </select>
-      <div *ngIf="
-          paymentForm.get('type_document')?.touched &&
-          paymentForm.get('type_document')?.invalid
-        " class="invalid-feedback">
-        Este campo es obligatorio.
+        <div *ngIf="paymentForm.get('email')?.touched && paymentForm.get('email')?.errors?.['required']"
+          class="invalid-feedback">
+          El email es obligatorio.
+        </div>
+        <div *ngIf="paymentForm.get('email')?.errors?.['email'] && paymentForm.get('email')?.touched"
+          class="invalid-feedback">
+          El email no tiene un formato válido.
+        </div>
       </div>
     </div>
 
-    <!-- Número de documento -->
-    <div class="mb-3">
-      <label for="number_document" class="form-label">Número de Documento</label>
-      <input type="text" class="form-control" id="number_document" formControlName="number_document" [class.is-invalid]="
-          paymentForm.get('number_document')?.invalid &&
-          paymentForm.get('number_document')?.touched
-        " />
-      <div *ngIf="
-          paymentForm.get('number_document')?.touched &&
-          paymentForm.get('number_document')?.invalid
-        " class="invalid-feedback">
-        Este campo es obligatorio.
+    <div class="row">
+      <!-- Tipo de documento -->
+      <div class="col-md-6 mb-3">
+        <label for="type_document" class="form-label">Tipo de Documento</label>
+        <select class="form-select" id="type_document" formControlName="type_document" [class.is-invalid]="
+      paymentForm.get('type_document')?.invalid &&
+      paymentForm.get('type_document')?.touched
+    ">
+          <option value="CC">Cédula (CC)</option>
+          <option value="PA">Pasaporte</option>
+          <option value="CE">Carnet de Extranjería</option>
+        </select>
+        <div *ngIf="
+      paymentForm.get('type_document')?.touched &&
+      paymentForm.get('type_document')?.invalid
+    " class="invalid-feedback">
+          Este campo es obligatorio.
+        </div>
+      </div>
+
+      <!-- Número de documento -->
+      <div class="col-md-6 mb-3">
+        <label for="number_document" class="form-label">Número de Documento</label>
+        <input type="text" class="form-control" id="number_document" formControlName="number_document"
+          [class.is-invalid]="
+      paymentForm.get('number_document')?.invalid &&
+      paymentForm.get('number_document')?.touched
+    " />
+        <div *ngIf="
+      paymentForm.get('number_document')?.touched &&
+      paymentForm.get('number_document')?.invalid
+    " class="invalid-feedback">
+          Este campo es obligatorio.
+        </div>
       </div>
     </div>
 
-    <!-- Monto -->
-    <div class="mb-3">
-      <label for="amount" class="form-label">Monto</label>
-      <input type="number" class="form-control" id="amount" formControlName="amount" [class.is-invalid]="
-          paymentForm.get('amount')?.invalid &&
-          paymentForm.get('amount')?.touched
-        " />
-      <div *ngIf="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors?.['required']"
-        class="invalid-feedback">
-        El monto es obligatorio.
+
+    <div class="row">
+      <!-- Monto -->
+      <div class="col-md-6 mb-3">
+        <label for="amount" class="form-label">Monto</label>
+        <input type="number" class="form-control" id="amount" formControlName="amount" [class.is-invalid]="
+      paymentForm.get('amount')?.invalid &&
+      paymentForm.get('amount')?.touched
+    " />
+        <div *ngIf="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors?.['required']"
+          class="invalid-feedback">
+          El monto es obligatorio.
+        </div>
+        <div *ngIf="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors?.['min']"
+          class="invalid-feedback">
+          El monto debe ser mayor o igual a 0.
+        </div>
       </div>
-      <div *ngIf="paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors?.['min']"
-        class="invalid-feedback">
-        El monto debe ser mayor o igual a 0.
+
+      <!-- Moneda -->
+      <div class="col-md-6 mb-3">
+        <label for="currency" class="form-label">Moneda</label>
+        <select class="form-select" id="currency" formControlName="currency" [class.is-invalid]="
+      paymentForm.get('currency')?.invalid &&
+      paymentForm.get('currency')?.touched
+    ">
+          <option value="COP">Pesos (COP)</option>
+          <option value="USD">Dólares (USD)</option>
+        </select>
+        <div *ngIf="
+      paymentForm.get('currency')?.touched &&
+      paymentForm.get('currency')?.invalid
+    " class="invalid-feedback">
+          Este campo es obligatorio.
+        </div>
       </div>
     </div>
 
-    <!-- Moneda -->
-    <div class="mb-3">
-      <label for="currency" class="form-label">Moneda</label>
-      <select class="form-select" id="currency" formControlName="currency" [class.is-invalid]="
-          paymentForm.get('currency')?.invalid &&
-          paymentForm.get('currency')?.touched
-        ">
-        <option value="COP">Pesos (COP)</option>
-        <option value="USD">Dólares (USD)</option>
-      </select>
-      <div *ngIf="
-          paymentForm.get('currency')?.touched &&
-          paymentForm.get('currency')?.invalid
-        " class="invalid-feedback">
-        Este campo es obligatorio.
-      </div>
-    </div>
+
 
     <!-- Botón -->
     <button type="submit" class="btn btn-primary" [disabled]="paymentForm.invalid">
