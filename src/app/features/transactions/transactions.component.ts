@@ -1,55 +1,79 @@
-import { CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { PaymentService } from '../../core/services/payment.service';
-
+import {
+  CommonModule,
+  CurrencyPipe,
+  DatePipe,
+  NgClass,
+  NgFor,
+  NgIf,
+} from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { TransactionService } from '../../core/services/transaction.service';
+import {
+  ApiResponse,
+  EMPTY_PAGINATION,
+  Pagination,
+  Transaction,
+} from '../../models/transaction.model';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
-  standalone:true,
-  imports: [NgIf, NgFor, CurrencyPipe, DatePipe, NgClass],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css'
+  styleUrl: './transactions.component.css',
 })
-export class TransactionsComponent {
- private readonly DEFAULT_PAYMENT_METHOD = 'Método no especificado';
-  private readonly DEFAULT_DATE = new Date();
-  private readonly DEFAULT_NUMBER = '0.00';
-  transactions: any[] = [];
-  loading: boolean = true;
+export class TransactionsComponent implements OnInit {
+  private readonly transactionService = inject(TransactionService);
+
+  transactions: Transaction[] = [];
+  pagination: Pagination<Transaction> | null = null;
+
+  loading = signal(true);
   error: string | null = null;
 
-  constructor(private paymentService: PaymentService) {}
+  readonly DEFAULTS = {
+    PAYMENT_METHOD: 'Método no especificado',
+    NUMBER: '0.00',
+    DATE: new Date(),
+  };
 
-  getPaymentMethodName(method: any['payment_method']): string {
-    return method?.name || this.DEFAULT_PAYMENT_METHOD;
-  }
-
-  getFormattedDate(date: string | null): Date {
-    return date ? new Date(date) : this.DEFAULT_DATE;
-  }
-
-  getNumericValue(value: string | null): string {
-    return value || this.DEFAULT_NUMBER;
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadTransactions();
   }
 
-  loadTransactions() {
-    this.loading = true;
-    this.error = null;
+  loadTransactions(): void {
+    this.transactionService
+      .getTransactions()
+      .pipe(
+        catchError((err) => {
+          this.error = 'Error al cargar las transacciones';
+          console.error(err);
+          this.loading.set(false);
+          return of({
+            success: false,
+            code: 500,
+            message: 'Error al cargar transacciones',
+            result: { transactions: { ...EMPTY_PAGINATION } },
+          } as ApiResponse<{ transactions: Pagination<Transaction> }>);
+        })
+      )
+      .subscribe((res) => {
+        this.transactions = res.result.transactions.data;
+        this.pagination = res.result.transactions;
+        this.loading.set(false);
+      });
+  }
 
-    this.paymentService.getTransactions().subscribe({
-      next: (data:any) => {
-        this.transactions = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error al cargar las transacciones';
-        this.loading = false;
-        console.error('Error fetching transactions:', error);
-      }
-    });
+  getPaymentMethodName(method: Transaction['payment_method']): string {
+    return method?.name || this.DEFAULTS.PAYMENT_METHOD;
+  }
+
+  getFormattedDate(date: string | null): Date {
+    return date ? new Date(date) : this.DEFAULTS.DATE;
+  }
+
+  getNumericValue(value: string | number | null): string {
+    return value ? String(value) : this.DEFAULTS.NUMBER;
   }
 }

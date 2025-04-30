@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { CreatePayment, CreatePaymentResponse } from '../../models/payment.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { TransactionResult } from '../../models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
