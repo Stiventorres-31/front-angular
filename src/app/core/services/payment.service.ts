@@ -17,7 +17,7 @@ export class PaymentService {
    'Accept': 'application/json'
  });
  createPayment(paymentData: CreatePayment):Observable<CreatePaymentResponse>{
-   return this.http.post<CreatePaymentResponse>(`${this.apiUrl}/createPayment`, paymentData, { headers: this.headers });
+   return this.http.post<CreatePaymentResponse>(`${this.apiUrl}/transactions`, paymentData, { headers: this.headers });
  }
 
  
